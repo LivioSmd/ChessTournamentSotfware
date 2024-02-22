@@ -20,7 +20,7 @@ class CreatePlayer:
         return {
             "Name": MainView.RetrieveName(),
             "Surname": MainView.RetrieveSurname(),
-            "Birth Date": MainView.RetrieveBirthDate()
+            "Birth Date": MainView.RetrieveBirthDate(),
         }
 
 
