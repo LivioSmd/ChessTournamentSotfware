@@ -24,13 +24,13 @@ class ManagePlayer:
 
     def serialize(self):
 
-        sendDatas = {
+        send_datas = {
             "Name": self.player.name,
             "Surname": self.player.surname,
             "Birth Date": self.player.birthDate,
         }
 
-        players_table.insert(sendDatas)
+        players_table.insert(send_datas)
 
 
 
@@ -38,7 +38,7 @@ class ManagePlayer:
     def deserialize():
 
         players_list = players_table.all()
-        retrieveDatas = []
+        retrieve_datas = []
 
         for player in players_list:
             data = {
@@ -46,7 +46,7 @@ class ManagePlayer:
                 "Surname": player['Surname'],
                 "Birth Date": player['Birth Date'],
             }
-            retrieveDatas.append(data)
+            retrieve_datas.append(data)
 
-        return retrieveDatas
+        return retrieve_datas
 
