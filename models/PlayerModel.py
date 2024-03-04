@@ -1,6 +1,7 @@
 from tinydb import TinyDB
 
 db = TinyDB('../datas/data.json')
+players_table = db.table('players')
 
 
 class PlayerModel:
@@ -22,27 +23,30 @@ class ManagePlayer:
         self.player = player
 
     def serialize(self):
+
         sendDatas = {
             "Name": self.player.name,
             "Surname": self.player.surname,
             "Birth Date": self.player.birthDate,
         }
-        db.insert({'Players': sendDatas})
+
+        players_table.insert(sendDatas)
+
+
 
     @staticmethod
     def deserialize():
 
+        players_list = players_table.all()
         retrieveDatas = []
 
-        for item in db:
-            if 'Players' in item:
-                playerList = item['Players']
-                data = {
-                    "Name": playerList['Name'],
-                    "Surname": playerList['Surname'],
-                    "Birth Date": playerList['Birth Date'],
-                }
-                retrieveDatas.append(data)
+        for player in players_list:
+            data = {
+                "Name": player['Name'],
+                "Surname": player['Surname'],
+                "Birth Date": player['Birth Date'],
+            }
+            retrieveDatas.append(data)
 
         return retrieveDatas
 
