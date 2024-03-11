@@ -22,31 +22,3 @@ class ManagePlayer:
     def __init__(self, player):
         self.player = player
 
-    def serialize(self):
-
-        send_datas = {
-            "Name": self.player.name,
-            "Surname": self.player.surname,
-            "Birth Date": self.player.birthDate,
-        }
-
-        players_table.insert(send_datas)
-
-
-
-    @staticmethod
-    def deserialize():
-
-        players_list = players_table.all()
-        retrieve_datas = []
-
-        for player in players_list:
-            data = {
-                "Name": player['Name'],
-                "Surname": player['Surname'],
-                "Birth Date": player['Birth Date'],
-            }
-            retrieve_datas.append(data)
-
-        return retrieve_datas
-
