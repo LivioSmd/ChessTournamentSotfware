@@ -20,6 +20,7 @@ class PlayerController:     # TODO rename
                 break
             elif choice == 3:
 
+                PlayerView.DisplayDataBase(ManagePlayer.deserialize(ManagePlayer.retrieve_all_players_from_db()))
 
                 """""
                 def is_even_number(number):
