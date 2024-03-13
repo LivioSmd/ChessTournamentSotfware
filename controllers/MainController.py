@@ -2,44 +2,52 @@ from views.PlayerView import PlayerView
 from views.Utils import Utils
 from models.PlayerModel import PlayerModel
 from models.PlayerModel import ManagePlayer
-from models.MatchModel import MatchModel
+from views.TournamentView import TournamentView
 
 
-class PlayerController:     # TODO rename
-    @staticmethod
-    def CreatePlayer():     # TODO rename
+class MainController:
+
+    def MainMethod(self):
         while True:
             choice = PlayerView.UserChoice()
-            if choice == 1:     # TODO faire des methodes pour les choix
-                player_infos = PlayerView.RetrievePlayerInfo()
-                new_player = PlayerModel(player_infos['Name'], player_infos['Surname'], player_infos['BirthDate'])
-                if ManagePlayer(new_player).serialize():
-                    Utils.DataBaseSuccess()
+            if choice == 1:
+                self.RegisterPlayer()
             elif choice == 2:
+                MainController.DisplayPlayersInDataBase()
+            elif choice == 3:
                 Utils.CloseProgram()
                 break
-            elif choice == 3:
+            elif choice == 4:
+                MainController.SetTournament()
 
-                PlayerView.DisplayDataBase(ManagePlayer.deserialize(ManagePlayer.retrieve_all_players_from_db()))
+    def RegisterPlayer(self):
+        player_info = PlayerView.RetrievePlayerInfo()
+        new_player = PlayerModel(player_info['Name'], player_info['Surname'], player_info['BirthDate'])
+        ManagePlayer.insert_player_in_db(ManagePlayer(new_player).serialize())
 
-                """""
-                def is_even_number(number):
-                    return number % 2 == 0
+    @staticmethod
+    def DisplayPlayersInDataBase():
+        PlayerView.DisplayDataBase(ManagePlayer.deserialize(ManagePlayer.retrieve_all_players_from_db()))
 
-                player_a_info = ""
-                player_b_info = ""
+    @staticmethod
+    def SetTournament():
+        TournamentView.SetTournamentName()
+        TournamentView.SetTournamentPlace()
+        TournamentView.SetTournamentStartDate()
+        TournamentView.SetTournamentEndDate()
+        TournamentView.SetTournamentRound()
+        TournamentView.SetTournamentDescription()
+        TournamentView.ChooseTournamentPlayers(ManagePlayer.deserialize(ManagePlayer.retrieve_all_players_from_db()))
 
-                for index, player in enumerate(ManagePlayer.deserialize()):
-                    if is_even_number(index):
-                        player_a = ManagePlayer.deserialize()[index]
-                        player_a_info = player_a["Name"] + " " + player_a["Surname"]
-                    else:
-                        player_b = ManagePlayer.deserialize()[index]
-                        player_b_info = player_b["Name"] + " " + player_b["Surname"]
+    """""
+    @staticmethod
+    def ChooseTournamentPlayers():
+        choice_list = []
 
-                print(MatchModel(player_a_info, player_b_info).match())
-                break
-                """""
+        Utils.DbListPlayersMessage()
+
+        TournamentView.ChooseTournamentPlayers(ManagePlayer.deserialize(ManagePlayer.retrieve_all_players_from_db()))
+    """""
 
 
-PlayerController().CreatePlayer()
+MainController().MainMethod()  # main.py pour lancer

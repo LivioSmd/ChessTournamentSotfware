@@ -5,5 +5,5 @@ class Utils:
         return print('Program out.')
 
     @staticmethod
-    def DataBaseSuccess():
-        return print('New player correctly added to Data Base !')
+    def DbListPlayersMessage():
+        return print("Here's a list of all the players in the database.")

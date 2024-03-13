@@ -7,10 +7,14 @@ class PlayerView:
     def UserChoice():
         while True:
             print('1. Add a player')
-            print('2. Quit')
-            print('3. Retrieve all players in Data Base')
+            print('2. Retrieve all players in Data Base')
+            print('3. Quit')
+            print('4. Launch a Tournament')
             input_choice_value = int(input('Make your choice: '))
-            if input_choice_value == 1 or input_choice_value == 2 or input_choice_value == 3:
+            if (input_choice_value == 1
+                    or input_choice_value == 2
+                    or input_choice_value == 3
+                    or input_choice_value == 4):
                 return input_choice_value
             else:
                 print(f'{input_choice_value} is not one of the choices.\n -------------')
@@ -41,3 +45,9 @@ class PlayerView:
                                         "BirthDate": input_date_value,
                                     }
 
+    @staticmethod
+    def DisplayDataBase(data):
+        for index, player in enumerate(data):
+            player = data.get(index)
+            print(f'{index}. {player['Name']} {player['Surname']}')
+        print('-------------------------')
