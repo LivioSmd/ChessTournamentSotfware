@@ -38,20 +38,34 @@ class TournamentView:
         print("Here's a list of all the players in the database.")
 
         for index, player in enumerate(players_in_db):
-            player = players_in_db.get(index)
-            print(f'{index}. {player['Name']} {player['Surname']}')
+            print(f'{index}. {player}')
 
-
-        input_choose_first_player = input("Select the players for your tournament one "
-                                          "by one using their number (1) :").strip()
-        choice_list.append(input_choose_first_player)  # stocker les instances de joueurs
+        input_choose_first_player = int(input("Select the players for your tournament one "
+                                              "by one using their number:").strip())
+        choice_first_player = players_in_db[input_choose_first_player]
+        choice_list.append(choice_first_player)
+        players_in_db.remove(choice_first_player)
         while True:
-            input_choose_players = input("Another player (N to stop) ?: ").strip()
-            if input_choose_players.lower() == 'n':
-                break
-            choice_list.append(input_choose_players)
-        print(choice_list)
-        return choice_list  # minimum 8 joueurs
+            for index, player in enumerate(players_in_db):
+                print(f'{index}. {player}')
+            if len(choice_list) >= 2:  # TODO add 8
+                input_choose_players_extra = input('Another player ("N" to stop | "D" to display selected '
+                                                   'players) ?: ').strip()
+                if input_choose_players_extra.lower() == 'n':
+                    break
+                elif input_choose_players_extra.lower() == 'd':
+                    print(f' Selected players : {choice_list} \n -------------')
+                else:
+                    extra_player_choice = players_in_db[int(input_choose_players_extra)]
+                    choice_list.append(extra_player_choice)
+                    players_in_db.remove(extra_player_choice)
+            else:
+                input_choose_players = int(input(f'Another player ({len(choice_list)}/2): ').strip())
+                choice_player = players_in_db[input_choose_players]
+                choice_list.append(choice_player)
+                players_in_db.remove(choice_player)
+        print(f'Selected players : {choice_list}')
+        return choice_list
 
     @staticmethod
     def SetTournamentDescription():

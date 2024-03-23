@@ -2,6 +2,7 @@ from tinydb import TinyDB
 
 db = TinyDB('../datas/data.json')
 players_table = db.table('players')
+players_with_index = players_table.all()
 
 
 class PlayerModel:
@@ -10,12 +11,11 @@ class PlayerModel:
         self.surname = surname
         self.birthDate = birthDate
 
-    def Player(self):
-        return {
-            "Name": self.name,
-            "Surname": self.surname,
-            "Birth Date": self.birthDate,
-        }
+    def __str__(self):
+        return f"{self.name} {self.surname}"
+
+    def __repr__(self):
+        return f"{self.name} {self.surname}"
 
 
 class ManagePlayer:
@@ -25,27 +25,16 @@ class ManagePlayer:
     def serialize(self):
         """ Recover a player instance /  Returns a dictionary containing player information"""
         player_serialized = {
-            "Name": self.player.name,
-            "Surname": self.player.surname,
-            "Birth Date": self.player.birthDate,    #enelever les espaces et maj au debut (verifier)
+            "name": self.player.name,
+            "surname": self.player.surname,
+            "birthDate": self.player.birthDate,
         }
 
         return player_serialized
 
     @staticmethod
-    def deserialize(players_list):
-        """Recover a list of players / Returns a dictionary containing player-numbered dictionaries"""
-        all_players = {}
-
-        for index, player in enumerate(players_list):
-            player_info = {
-                "Name": player['Name'],
-                "Surname": player['Surname'],
-                "Birth Date": player['Birth Date'],
-            }
-            all_players.update({index: player_info})
-
-        return all_players  # doit retourner une instance de classe (prends self et mon instance et retourne une instance)
+    def deserialize(a_player):
+        return PlayerModel(a_player.get("name"), a_player.get("surname"), a_player.get("birthDate"))
 
     @staticmethod
     def insert_player_in_db(player):
@@ -56,8 +45,9 @@ class ManagePlayer:
     def retrieve_all_players_from_db():
         """Returns a list of all players in the database"""
         all_players = players_table.all()
+
         players_list = []
         for player in all_players:
-            players_list.append(player) # appel ma deserialise
+            players_list.append(ManagePlayer.deserialize(player))
 
         return players_list

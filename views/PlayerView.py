@@ -40,14 +40,13 @@ class PlayerView:
                                     print(
                                         f"New player Registered ---> {input_name_value} {input_surname_value} {input_date_value} !")
                                     return {
-                                        "Name": input_name_value,
-                                        "Surname": input_surname_value,
-                                        "BirthDate": input_date_value,
+                                        "name": input_name_value,
+                                        "surname": input_surname_value,
+                                        "birthDate": input_date_value,
                                     }
 
     @staticmethod
     def DisplayDataBase(data):
         for index, player in enumerate(data):
-            player = data.get(index)
-            print(f'{index}. {player['Name']} {player['Surname']}')
+            print(f'{index}. {player}')
         print('-------------------------')

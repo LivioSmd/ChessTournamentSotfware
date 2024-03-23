@@ -22,22 +22,22 @@ class MainController:
 
     def RegisterPlayer(self):
         player_info = PlayerView.RetrievePlayerInfo()
-        new_player = PlayerModel(player_info['Name'], player_info['Surname'], player_info['BirthDate'])
+        new_player = PlayerModel(player_info['name'], player_info['surname'], player_info['birthDate'])
         ManagePlayer.insert_player_in_db(ManagePlayer(new_player).serialize())
 
     @staticmethod
     def DisplayPlayersInDataBase():
-        PlayerView.DisplayDataBase(ManagePlayer.deserialize(ManagePlayer.retrieve_all_players_from_db()))
+        PlayerView.DisplayDataBase(ManagePlayer.retrieve_all_players_from_db())
 
     @staticmethod
     def SetTournament():
+        TournamentView.ChooseTournamentPlayers(ManagePlayer.retrieve_all_players_from_db())
         TournamentView.SetTournamentName()
         TournamentView.SetTournamentPlace()
         TournamentView.SetTournamentStartDate()
         TournamentView.SetTournamentEndDate()
         TournamentView.SetTournamentRound()
         TournamentView.SetTournamentDescription()
-        TournamentView.ChooseTournamentPlayers(ManagePlayer.deserialize(ManagePlayer.retrieve_all_players_from_db()))
 
     """""
     @staticmethod
