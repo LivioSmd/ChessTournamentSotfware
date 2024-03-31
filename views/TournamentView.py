@@ -2,8 +2,12 @@ class TournamentView:
 
     @staticmethod
     def SetTournamentName():
-        input_tournament_name = input('Enter the tournament Name: ')
-        return input_tournament_name
+        while True:
+            input_tournament_name = input('\nEnter the tournament Name: ').strip()
+            if input_tournament_name.isdigit():
+                print(f'"{input_tournament_name}" is not a valid name.')
+            else:
+                break   #TODO finir de sécuriser les autres parties du formulaire pour créer un tournoi
 
     @staticmethod
     def SetTournamentPlace():
@@ -26,10 +30,14 @@ class TournamentView:
                                            'do you want to change it? (y/n)').strip()
         if input_tournament_ask_round.lower() == 'y':
             input_tournament_end_date = input('Enter number of Rounds: ')
-            print(input_tournament_end_date)
             return input_tournament_end_date
         elif input_tournament_ask_round.lower() == 'n':
             return 4
+
+    @staticmethod
+    def SetTournamentDescription():
+        input_tournament_description = input('Enter the tournament Description: ')
+        return input_tournament_description
 
     @staticmethod
     def ChooseTournamentPlayers(players_in_db):
@@ -43,7 +51,7 @@ class TournamentView:
         input_choose_first_player = int(input("Select the players for your tournament one "
                                               "by one using their number:").strip())
         choice_first_player = players_in_db[input_choose_first_player]
-        choice_list.append(choice_first_player)
+        choice_list.append(choice_first_player)    #TODO le nom seulement car, n'arrive pas a inserer une liste d'instance de classe en base
         players_in_db.remove(choice_first_player)
         while True:
             for index, player in enumerate(players_in_db):
@@ -64,10 +72,4 @@ class TournamentView:
                 choice_player = players_in_db[input_choose_players]
                 choice_list.append(choice_player)
                 players_in_db.remove(choice_player)
-        print(f'Selected players : {choice_list}')
         return choice_list
-
-    @staticmethod
-    def SetTournamentDescription():
-        input_tournament_description = input('Enter the tournament Description: ')
-        return input_tournament_description

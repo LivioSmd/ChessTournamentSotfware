@@ -6,7 +6,7 @@ class PlayerView:
     @staticmethod
     def UserChoice():
         while True:
-            print('1. Add a player')
+            print('\n1. Add a player')
             print('2. Retrieve all players in Data Base')
             print('3. Quit')
             print('4. Launch a Tournament')
@@ -23,22 +23,22 @@ class PlayerView:
     def RetrievePlayerInfo():
         while True:
             while True:
-                input_name_value = input("enter player's name: ").strip()
+                input_name_value = input("\nEnter player's Name: ").strip()
                 if input_name_value.isdigit():
-                    print(f'"{input_name_value}" is not a valid name.')
+                    print(f'"{input_name_value}" is not a valid Name.')
                 else:
                     while True:
-                        input_surname_value = input("enter player's surname: ").strip()
+                        input_surname_value = input("Enter player's Surname: ").strip()
                         if input_surname_value.isdigit():
-                            print(f'"{input_surname_value}" is not a valid surname.')
+                            print(f'"{input_surname_value}" is not a valid Surname.')
                         else:
                             while True:
-                                input_date_value = input("enter the player's birth date (DD/MM/YYYY): ").strip()
+                                input_date_value = input("Enter the player's Birth Date (DD/MM/YYYY): ").strip()
                                 if not re.match(r'^\d{2}/\d{2}/\d{4}$', input_date_value):
-                                    print(f'"{input_date_value}" is not a valid date.')
+                                    print(f'"{input_date_value}" is not a valid Birth Date.')
                                 else:
                                     print(
-                                        f"New player Registered ---> {input_name_value} {input_surname_value} {input_date_value} !")
+                                        f"\n---- New player Registered : {input_name_value} {input_surname_value} {input_date_value} ! ----\n")
                                     return {
                                         "name": input_name_value,
                                         "surname": input_surname_value,
@@ -47,6 +47,5 @@ class PlayerView:
 
     @staticmethod
     def DisplayDataBase(data):
-        for index, player in enumerate(data):
-            print(f'{index}. {player}')
-        print('-------------------------')
+        for player in data:
+            print(f'{player}')

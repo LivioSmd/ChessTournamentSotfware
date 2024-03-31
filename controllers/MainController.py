@@ -1,8 +1,8 @@
 from views.PlayerView import PlayerView
 from views.Utils import Utils
-from models.PlayerModel import PlayerModel
-from models.PlayerModel import ManagePlayer
 from views.TournamentView import TournamentView
+from models.PlayerModel import PlayerModel
+from models.TournamentModel import MainTournament, ManageTournament
 
 
 class MainController:
@@ -13,41 +13,39 @@ class MainController:
             if choice == 1:
                 self.RegisterPlayer()
             elif choice == 2:
-                MainController.DisplayPlayersInDataBase()
+                self.DisplayPlayersInDataBase()
             elif choice == 3:
                 Utils.CloseProgram()
                 break
             elif choice == 4:
-                MainController.SetTournament()
+                self.SetTournament()
 
-    def RegisterPlayer(self):
+    @staticmethod
+    def RegisterPlayer():
         player_info = PlayerView.RetrievePlayerInfo()
         new_player = PlayerModel(player_info['name'], player_info['surname'], player_info['birthDate'])
-        ManagePlayer.insert_player_in_db(ManagePlayer(new_player).serialize())
+        PlayerModel.insert_player_in_db(new_player)
 
     @staticmethod
     def DisplayPlayersInDataBase():
-        PlayerView.DisplayDataBase(ManagePlayer.retrieve_all_players_from_db())
+        Utils.DbListPlayersMessage()
+        PlayerView.DisplayDataBase(PlayerModel.retrieve_all_players_from_db())
 
     @staticmethod
     def SetTournament():
-        TournamentView.ChooseTournamentPlayers(ManagePlayer.retrieve_all_players_from_db())
-        TournamentView.SetTournamentName()
-        TournamentView.SetTournamentPlace()
-        TournamentView.SetTournamentStartDate()
-        TournamentView.SetTournamentEndDate()
-        TournamentView.SetTournamentRound()
-        TournamentView.SetTournamentDescription()
-
-    """""
-    @staticmethod
-    def ChooseTournamentPlayers():
-        choice_list = []
-
-        Utils.DbListPlayersMessage()
-
-        TournamentView.ChooseTournamentPlayers(ManagePlayer.deserialize(ManagePlayer.retrieve_all_players_from_db()))
-    """""
+        tournament = MainTournament(
+            -1,
+            TournamentView.SetTournamentName(),
+            TournamentView.SetTournamentPlace(),
+            TournamentView.SetTournamentStartDate(),
+            TournamentView.SetTournamentEndDate(),
+            TournamentView.SetTournamentRound(),
+            0,
+            0,
+            TournamentView.SetTournamentDescription(),
+            TournamentView.ChooseTournamentPlayers(ManagePlayer.retrieve_all_players_from_db())
+        )
+        ManageTournament.insert_tournament_in_db(ManageTournament(tournament).serialize())
 
 
 MainController().MainMethod()  # main.py pour lancer
