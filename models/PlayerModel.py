@@ -5,7 +5,7 @@ players_table = db.table('players')
 
 
 class PlayerModel:
-    def __init__(self, name, surname, birthDate):
+    def __init__(self, name=None, surname=None, birthDate=None):
         self.id = -1
         self.name = name
         self.surname = surname
@@ -34,21 +34,20 @@ class PlayerModel:
         return self
 
     def insert_player_in_db(self):
-        player = self.serialize()
-        insert_id = players_table.insert(player)
-        self.update(insert_id)
+        self.id = players_table.insert(self.serialize())
+        self.update()
+
+    def update(self):
+        players_table.update(self.serialize(), doc_ids=[self.id])
+
+    def player_retrieval(self, id):
+        player = db.table('players').get(doc_id=id)
+        return self.deserialize(player)
 
     @staticmethod
-    def retrieve_all_players_from_db():     # TODO voir pour enlever le static
-        all_players = players_table.all()
-
+    def retrieve_all_players_from_db():
         players_list = []
-        for player in all_players:
-            player_instance = PlayerModel("", "", "")
-            players_list.append(player_instance.deserialize(player))
+        for player in players_table.all():
+            players_list.append(PlayerModel().deserialize(player))
 
         return players_list
-
-    @staticmethod
-    def update(player_id_in_db):
-        players_table.update({'id': player_id_in_db}, doc_ids=[player_id_in_db])

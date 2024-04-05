@@ -4,10 +4,10 @@ db = TinyDB('../datas/data.json')
 tournaments_table = db.table('tournaments')
 
 
-class MainTournament:
-    def __init__(self, id, name, place, start_date, end_date, round_total, current_round, all_round_list, description,
+class TournamentModel:
+    def __init__(self, name, place, start_date, end_date, round_total, current_round, all_round_list, description,
                  player_list):
-        self.id = id
+        self.id = -1
         self.name = name
         self.place = place
         self.start_date = start_date
@@ -18,31 +18,29 @@ class MainTournament:
         self.description = description
         self.player_list = player_list
 
-
-class ManageTournament:
-    def __init__(self, tournament):
-        self.tournament = tournament
-
     def serialize(self):
         tournament_serialized = {
-            "id": self.tournament.id,
-            "name": self.tournament.name,
-            "place": self.tournament.place,
-            "startDate": self.tournament.start_date,
-            "startEnd": self.tournament.end_date,
-            "totalRound": self.tournament.round_total,
-            "currentRound": self.tournament.current_round,
-            "allRoundsList": self.tournament.all_rounds_list,
-            "description": self.tournament.description,
-            "playerList": self.tournament.player_list,
+            "id": self.id,
+            "name": self.name,
+            "place": self.place,
+            "startDate": self.start_date,
+            "startEnd": self.end_date,
+            "totalRound": self.round_total,
+            "currentRound": self.current_round,
+            "allRoundsList": self.all_rounds_list,
+            "description": self.description,
+            "playerList": [p.id for p in self.player_list],
         }
+
+        players = []
+        for p in self.player_list:
+            players.append(p.id)
+
         return tournament_serialized
 
-    @staticmethod
-    def insert_tournament_in_db(tournament):
-        """Insert tournament in database as dictionary"""
-        ManageTournament.update_tournament_id(tournaments_table.insert(tournament))
+    def insert_tournament_in_db(self):
+        self.id = tournaments_table.insert(self.serialize())
+        self.update()
 
-    @staticmethod
-    def update_tournament_id(tournament_id_in_db):
-        tournaments_table.update({'id': tournament_id_in_db}, doc_ids=[tournament_id_in_db])
+    def update(self):
+        tournaments_table.update(self.serialize(), doc_ids=[self.id])
