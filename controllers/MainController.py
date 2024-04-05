@@ -2,7 +2,7 @@ from views.PlayerView import PlayerView
 from views.Utils import Utils
 from views.TournamentView import TournamentView
 from models.PlayerModel import PlayerModel
-from models.TournamentModel import MainTournament, ManageTournament
+from models.TournamentModel import TournamentModel
 
 
 class MainController:
@@ -33,8 +33,7 @@ class MainController:
 
     @staticmethod
     def SetTournament():
-        tournament = MainTournament(
-            -1,
+        tournament = TournamentModel(
             TournamentView.SetTournamentName(),
             TournamentView.SetTournamentPlace(),
             TournamentView.SetTournamentStartDate(),
@@ -43,9 +42,8 @@ class MainController:
             0,
             0,
             TournamentView.SetTournamentDescription(),
-            TournamentView.ChooseTournamentPlayers(ManagePlayer.retrieve_all_players_from_db())
+            TournamentView.ChooseTournamentPlayers(PlayerModel.retrieve_all_players_from_db())
         )
-        ManageTournament.insert_tournament_in_db(ManageTournament(tournament).serialize())
-
+        TournamentModel.insert_tournament_in_db(tournament)
 
 MainController().MainMethod()  # main.py pour lancer

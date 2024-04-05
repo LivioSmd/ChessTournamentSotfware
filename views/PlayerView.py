@@ -49,3 +49,7 @@ class PlayerView:
     def DisplayDataBase(data):
         for player in data:
             print(f'{player}')
+
+    @staticmethod
+    def DisplayPlayer(player):
+        print(player)

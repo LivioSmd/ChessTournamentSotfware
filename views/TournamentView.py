@@ -7,7 +7,7 @@ class TournamentView:
             if input_tournament_name.isdigit():
                 print(f'"{input_tournament_name}" is not a valid name.')
             else:
-                break   #TODO finir de sécuriser les autres parties du formulaire pour créer un tournoi
+                break  # TODO finir de sécuriser les autres parties du formulaire pour créer un tournoi
 
     @staticmethod
     def SetTournamentPlace():
@@ -45,17 +45,18 @@ class TournamentView:
 
         print("Here's a list of all the players in the database.")
 
-        for index, player in enumerate(players_in_db):
-            print(f'{index}. {player}')
+        for player in players_in_db:
+            print(f'{player}')
 
         input_choose_first_player = int(input("Select the players for your tournament one "
                                               "by one using their number:").strip())
-        choice_first_player = players_in_db[input_choose_first_player]
-        choice_list.append(choice_first_player)    #TODO le nom seulement car, n'arrive pas a inserer une liste d'instance de classe en base
-        players_in_db.remove(choice_first_player)
+        for player in players_in_db:
+            if player.id == input_choose_first_player:
+                choice_list.append(player.id)
+                players_in_db.remove(player)
         while True:
-            for index, player in enumerate(players_in_db):
-                print(f'{index}. {player}')
+            for player in players_in_db:
+                print(f'{player}')
             if len(choice_list) >= 2:  # TODO add 8
                 input_choose_players_extra = input('Another player ("N" to stop | "D" to display selected '
                                                    'players) ?: ').strip()
@@ -64,12 +65,14 @@ class TournamentView:
                 elif input_choose_players_extra.lower() == 'd':
                     print(f' Selected players : {choice_list} \n -------------')
                 else:
-                    extra_player_choice = players_in_db[int(input_choose_players_extra)]
-                    choice_list.append(extra_player_choice)
-                    players_in_db.remove(extra_player_choice)
+                    for player in players_in_db:
+                        if player.id == int(input_choose_players_extra):
+                            choice_list.append(player.id)
+                            players_in_db.remove(player)
             else:
                 input_choose_players = int(input(f'Another player ({len(choice_list)}/2): ').strip())
-                choice_player = players_in_db[input_choose_players]
-                choice_list.append(choice_player)
-                players_in_db.remove(choice_player)
+                for player in players_in_db:
+                    if player.id == input_choose_players:
+                        choice_list.append(player.id)
+                        players_in_db.remove(player)
         return choice_list
