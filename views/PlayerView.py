@@ -19,31 +19,30 @@ class PlayerView:
             else:
                 print(f'{input_choice_value} is not one of the choices.\n -------------')
 
+    def RetrievePlayerInfo(self):
+        return {
+            "name": self.getString("\nEnter player's Name:"),
+            "surname": self.getString("Enter player's Surname:"),
+            "birthDate": self.getDate("Enter player's Birth Date:"),
+        }
+
     @staticmethod
-    def RetrievePlayerInfo():
+    def getString(message):
         while True:
-            while True:
-                input_name_value = input("\nEnter player's Name: ").strip()
-                if input_name_value.isdigit():
-                    print(f'"{input_name_value}" is not a valid Name.')
-                else:
-                    while True:
-                        input_surname_value = input("Enter player's Surname: ").strip()
-                        if input_surname_value.isdigit():
-                            print(f'"{input_surname_value}" is not a valid Surname.')
-                        else:
-                            while True:
-                                input_date_value = input("Enter the player's Birth Date (DD/MM/YYYY): ").strip()
-                                if not re.match(r'^\d{2}/\d{2}/\d{4}$', input_date_value):
-                                    print(f'"{input_date_value}" is not a valid Birth Date.')
-                                else:
-                                    print(
-                                        f"\n---- New player Registered : {input_name_value} {input_surname_value} {input_date_value} ! ----\n")
-                                    return {
-                                        "name": input_name_value,
-                                        "surname": input_surname_value,
-                                        "birthDate": input_date_value,
-                                    }
+            input_value = input(message).strip()
+            if input_value.isdigit():
+                print(f'"{input_value}" is not valid')
+            else:
+                return input_value
+
+    @staticmethod
+    def getDate(message):
+        while True:
+            input_value = input(message).strip()
+            if not re.match(r'^\d{2}/\d{2}/\d{4}$', input_value):
+                print(f'"{input_value}" is not valid (dd/mm/yyyy)')
+            else:
+                return input_value
 
     @staticmethod
     def DisplayDataBase(data):

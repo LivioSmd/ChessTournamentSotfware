@@ -1,3 +1,6 @@
+import re
+
+
 class TournamentView:
 
     @staticmethod
@@ -7,7 +10,7 @@ class TournamentView:
             if input_tournament_name.isdigit():
                 print(f'"{input_tournament_name}" is not a valid name.')
             else:
-                break  # TODO finir de sécuriser les autres parties du formulaire pour créer un tournoi
+                return input_tournament_name
 
     @staticmethod
     def SetTournamentPlace():
@@ -16,23 +19,37 @@ class TournamentView:
 
     @staticmethod
     def SetTournamentStartDate():
-        input_tournament_start_date = input('Enter the tournament Start date (DD/MM/YYYY): ')
-        return input_tournament_start_date
+        while True:
+            input_tournament_start_date = input('Enter the tournament Start Date (DD/MM/YYYY): ').strip()
+            if not re.match(r'^\d{2}/\d{2}/\d{4}$', input_tournament_start_date):
+                print(f'"{input_tournament_start_date}" is not a valid Date.')
+            else:
+                return input_tournament_start_date
 
     @staticmethod
     def SetTournamentEndDate():
-        input_tournament_end_date = input('Enter the tournament End date (DD/MM/YYYY): ')
-        return input_tournament_end_date
+        while True:
+            input_tournament_end_date = input('Enter the tournament End Date (DD/MM/YYYY): ').strip()
+            if not re.match(r'^\d{2}/\d{2}/\d{4}$', input_tournament_end_date):
+                print(f'"{input_tournament_end_date}" is not a valid Date.')
+            else:
+                return input_tournament_end_date
 
     @staticmethod
     def SetTournamentRound():
-        input_tournament_ask_round = input('The number of Rounds is set to 4 by default, '
-                                           'do you want to change it? (y/n)').strip()
-        if input_tournament_ask_round.lower() == 'y':
-            input_tournament_end_date = input('Enter number of Rounds: ')
-            return input_tournament_end_date
-        elif input_tournament_ask_round.lower() == 'n':
-            return 4
+        while True:
+            input_tournament_ask_round = input('The number of Rounds is set to 4 by default, '
+                                               'do you want to change it? (y/n)').strip()
+            if input_tournament_ask_round.lower() == 'y':
+                input_tournament_end_date = input('Enter number of Rounds: ')
+                if input_tournament_end_date.isdigit():
+                    return input_tournament_end_date
+                else:
+                    print(f'"{input_tournament_end_date}" is not a number.')
+            elif input_tournament_ask_round.lower() == 'n':
+                return 4
+            else:
+                print(f'"{input_tournament_ask_round}" is not one of the choices.')
 
     @staticmethod
     def SetTournamentDescription():
@@ -52,27 +69,24 @@ class TournamentView:
                                               "by one using their number:").strip())
         for player in players_in_db:
             if player.id == input_choose_first_player:
-                choice_list.append(player.id)
+                choice_list.append(player)
                 players_in_db.remove(player)
         while True:
             for player in players_in_db:
                 print(f'{player}')
             if len(choice_list) >= 2:  # TODO add 8
-                input_choose_players_extra = input('Another player ("N" to stop | "D" to display selected '
-                                                   'players) ?: ').strip()
+                input_choose_players_extra = input('Another player (enter "N" to stop) ?: ').strip()
                 if input_choose_players_extra.lower() == 'n':
                     break
-                elif input_choose_players_extra.lower() == 'd':
-                    print(f' Selected players : {choice_list} \n -------------')
                 else:
                     for player in players_in_db:
                         if player.id == int(input_choose_players_extra):
-                            choice_list.append(player.id)
+                            choice_list.append(player)
                             players_in_db.remove(player)
             else:
-                input_choose_players = int(input(f'Another player ({len(choice_list)}/2): ').strip())
+                input_choose_players = int(input(f'Another player ({len(choice_list)}/2): ').strip())  # TODO add 8
                 for player in players_in_db:
                     if player.id == input_choose_players:
-                        choice_list.append(player.id)
+                        choice_list.append(player)
                         players_in_db.remove(player)
         return choice_list
