@@ -10,12 +10,13 @@ class PlayerModel:
         self.name = name
         self.surname = surname
         self.birthDate = birthDate
+        self.score = 0
 
     def __str__(self):
-        return f"{self.id}. {self.name} {self.surname}"
+        return f"{self.id}. {self.name} {self.surname} score: {self.score}"
 
     def __repr__(self):
-        return f"{self.id}. {self.name} {self.surname}"
+        return f"{self.id}. {self.name} {self.surname} score: {self.score}"
 
     def serialize(self):
         player_serialized = {
@@ -23,6 +24,7 @@ class PlayerModel:
             "name": self.name,
             "surname": self.surname,
             "birthDate": self.birthDate,
+            "score": self.score,
         }
         return player_serialized
 
@@ -31,6 +33,7 @@ class PlayerModel:
         self.name = player.get('name')
         self.surname = player.get('surname')
         self.birthDate = player.get('birthDate')
+        self.score = player.get('score')
         return self
 
     def insert_player_in_db(self):

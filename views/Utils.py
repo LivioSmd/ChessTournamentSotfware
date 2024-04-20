@@ -9,5 +9,5 @@ class Utils:
         return print("\n---- Here's a list of all the players in the database  ----")
 
     @staticmethod
-    def SuccessTournament(name, start, end):
-        print(f"\n---- New Tournament Registered: {name},  from: {start} to: {end} ! ----\n")
+    def SuccessTournament(name, start, end, id):
+        print(f"\n---- New Tournament Registered:  [{id}]. {name},  from: {start} to: {end} ! ----\n")

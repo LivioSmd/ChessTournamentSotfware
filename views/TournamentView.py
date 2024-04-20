@@ -41,11 +41,11 @@ class TournamentView:
             input_tournament_ask_round = input('The number of Rounds is set to 4 by default, '
                                                'do you want to change it? (y/n)').strip()
             if input_tournament_ask_round.lower() == 'y':
-                input_tournament_end_date = input('Enter number of Rounds: ')
-                if input_tournament_end_date.isdigit():
-                    return input_tournament_end_date
+                input_tournament_round = input('Enter number of Rounds: ')
+                if input_tournament_round.isdigit():
+                    return int(input_tournament_round)
                 else:
-                    print(f'"{input_tournament_end_date}" is not a number.')
+                    print(f'"{input_tournament_round}" is not a number.')
             elif input_tournament_ask_round.lower() == 'n':
                 return 4
             else:

@@ -11,7 +11,7 @@ class MatchModel:
 
     def match(self):
         player_match = (
-            [self.player_a, 0],
-            [self.player_b, 0]
+            [self.player_a],
+            [self.player_b]
         )
         return player_match

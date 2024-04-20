@@ -14,16 +14,16 @@ class TournamentModel:
         self.start_date = start_date
         self.end_date = end_date
         self.round_total = round_total
-        self.current_round = 0
+        self.current_round = 1
         self.all_rounds_list = []
         self.description = description
         self.player_list = player_list
 
     def __str__(self):
-        return f"{self.name}. from: {self.start_date} to: {self.end_date} and {self.all_rounds_list}"
+        return f"{self.name}. from: {self.start_date} to: {self.end_date} and {self.current_round} and {self.all_rounds_list}"
 
     def __repr__(self):
-        return f"{self.name}. from: {self.start_date} to: {self.end_date} and {self.all_rounds_list}"
+        return f"{self.name}. from: {self.start_date} to: {self.end_date} and {self.current_round} and {self.all_rounds_list}"
 
     def serialize(self):
         tournament_serialized = {
@@ -59,7 +59,11 @@ class TournamentModel:
         self.description = tournament.get('description')
         self.player_list = [PlayerModel().player_retrieval(p) for p in tournament.get('playerList')]
 
-        print(self.player_list)
+        """"
+        players = []
+        for p in tournament.get('playerList'):
+            players.append(PlayerModel().player_retrieval(p))
+        """""
 
         return self
 
