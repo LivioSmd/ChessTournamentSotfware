@@ -90,3 +90,8 @@ class TournamentView:
                         choice_list.append(player)
                         players_in_db.remove(player)
         return choice_list
+
+    @staticmethod
+    def DisplayDataBase(data):
+        for tournament in data:
+            print(f'{tournament}')

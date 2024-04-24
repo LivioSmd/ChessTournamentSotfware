@@ -16,7 +16,7 @@ class RoundModel:
             "name": self.name,
             "matchList": self.match_list,
             "startDate": self.start_date,
-            "startEnd": self.end_date,
+            "endDate": self.end_date,
         }
 
         return round_serialized

@@ -20,10 +20,10 @@ class TournamentModel:
         self.player_list = player_list
 
     def __str__(self):
-        return f"{self.name}. from: {self.start_date} to: {self.end_date} and {self.current_round} and {self.all_rounds_list}"
+        return f"[{self.id}] {self.name}. from: {self.start_date} to: {self.end_date}"
 
     def __repr__(self):
-        return f"{self.name}. from: {self.start_date} to: {self.end_date} and {self.current_round} and {self.all_rounds_list}"
+        return f"[{self.id}] {self.name}. from: {self.start_date} to: {self.end_date}"
 
     def serialize(self):
         tournament_serialized = {
@@ -77,3 +77,11 @@ class TournamentModel:
     def tournament_retrieval(self, id):
         tournament = db.table('tournaments').get(doc_id=id)
         return self.deserialize(tournament)
+
+    @staticmethod
+    def retrieve_all_tournaments_from_db():
+        tournaments_list = []
+        for tournament in tournaments_table.all():
+            tournaments_list.append(TournamentModel().deserialize(tournament))
+
+        return tournaments_list

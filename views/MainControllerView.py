@@ -17,3 +17,7 @@ class MainControllerView:
                 return input_choice_value
             else:
                 print(f'{input_choice_value} is not one of the choices.\n -------------')
+
+    @staticmethod
+    def ChooseTournament():
+        return int(input('\nSelect a tournament by is ID : '))

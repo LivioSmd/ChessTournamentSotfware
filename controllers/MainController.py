@@ -4,7 +4,7 @@ from views.TournamentView import TournamentView
 from views.MainControllerView import MainControllerView
 from models.PlayerModel import PlayerModel
 from models.TournamentModel import TournamentModel
-from controllers.TournamentController import TournamentControllers
+from controllers.TournamentController import TournamentController
 
 
 class MainController:
@@ -17,7 +17,7 @@ class MainController:
             elif choice == 2:
                 self.SetTournament()
             elif choice == 3:
-                TournamentControllers().MainMethod()
+                TournamentController().MainMethod(self.ChooseTournament())
             elif choice == 4:
                 self.DisplayPlayersInDataBase()
             elif choice == 5:
@@ -35,6 +35,16 @@ class MainController:
         Utils.DbListPlayersMessage()
         PlayerView.DisplayDataBase(PlayerModel.retrieve_all_players_from_db())
 
+    def ChooseTournament(self):
+        self.DisplayTournamentsInDataBase()
+        tournament_id = MainControllerView.ChooseTournament()
+        return TournamentModel().tournament_retrieval(tournament_id)
+
+    @staticmethod
+    def DisplayTournamentsInDataBase():
+        Utils.DbListTournamentsMessage()
+        TournamentView.DisplayDataBase(TournamentModel.retrieve_all_tournaments_from_db())
+
     @staticmethod
     def SetTournament():
         tournament = TournamentModel(
@@ -48,6 +58,7 @@ class MainController:
         )
         TournamentModel.insert_tournament_in_db(tournament)
         Utils.SuccessTournament(tournament.name, tournament.start_date, tournament.end_date, tournament.id)
+        TournamentController().MainMethod(tournament)
 
 
 MainController().MainMethod()  # main.py pour lancer
