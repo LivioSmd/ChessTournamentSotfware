@@ -7,30 +7,30 @@ import datetime
 
 
 class TournamentController:
-    def MainMethod(self, tournament):
-        TournamentControllerView.RoundInfo(tournament)
+    def main_method(self, tournament):
+        TournamentControllerView.round_info(tournament)
         while True:
-            choice = TournamentControllerView.UserChoice()
+            choice = TournamentControllerView.user_choice()
             if choice == 1:
                 if not tournament.all_rounds_list:
-                    self.LaunchRound(tournament)
+                    self.launch_round(tournament)
                 elif "Undefined" in tournament.all_rounds_list[-1]["endDate"]:
-                    TournamentControllerView.ImpossibleLaunchRound()
+                    TournamentControllerView.impossible_launch_round()
                 else:
-                    self.LaunchRound(tournament)
+                    self.launch_round(tournament)
             elif choice == 2:
-                self.LaunchRound(tournament)
+                self.launch_round(tournament)
             elif choice == 3:
-                self.RetrieveTournamentNameDates(tournament)
+                self.retrieve_tournament_name_dates(tournament)
             elif choice == 4:
-                self.RetrieveTournamentPlayerList(tournament)
+                self.retrieve_tournament_player_list(tournament)
             elif choice == 5:
-                self.RetrieveTournamentRoundsMatchs(tournament)
+                self.retrieve_tournament_rounds_matchs(tournament)
             elif choice == 6:
                 break
 
     @staticmethod
-    def Rematches(test_rematch, tournament):
+    def re_matches(test_rematch, tournament):
         all_rounds = tournament.all_rounds_list
         for round in all_rounds:
             match_list = round['matchList']
@@ -44,29 +44,29 @@ class TournamentController:
                     print('HELP')
                     return test_rematch
 
-    def LaunchRound(self, tournament):
+    def launch_round(self, tournament):
         while True:
-            if self.TournamentEnded(tournament):
+            if self.tournament_ended(tournament):
                 break
 
             if tournament.current_round == 1:
                 if not tournament.all_rounds_list:
-                    self.FirstRound(tournament)
+                    self.first_round(tournament)
                     break
                 else:
-                    self.CompleteRound(tournament)
+                    self.complete_round(tournament)
                     break
             else:
                 if "Undefined" in tournament.all_rounds_list[-1]["endDate"]:
-                    self.CompleteRound(tournament)
-                    self.TournamentEnded(tournament)
+                    self.complete_round(tournament)
+                    self.tournament_ended(tournament)
                     break
                 else:
-                    self.NextRound(tournament)
+                    self.next_round(tournament)
                     break
 
     @staticmethod
-    def FirstRound(tournament):
+    def first_round(tournament):
         player_list = tournament.player_list
         round_model = RoundModel()
         now = datetime.datetime.now()
@@ -78,24 +78,24 @@ class TournamentController:
             if i < len(player_list) - 1:
                 player_1 = PlayerModel().player_retrieval(player_list[i].id)
                 player_2 = PlayerModel().player_retrieval(player_list[i + 1].id)
-                new_match = MatchModel(player_1.id, 0, player_2.id, 0).Match()
+                new_match = MatchModel(player_1.id, 0, player_2.id, 0).match()
                 round_model.match_list.append(new_match)
 
         round_model.name = f'Round {tournament.current_round}'
         round_model.start_date = date_formatted
-        TournamentControllerView.RoundName(tournament)
+        TournamentControllerView.round_name(tournament)
 
         match_list = round_model.match_list
 
         for i in range(len(match_list)):
             player_1 = PlayerModel().player_retrieval(match_list[i][0][0]).name
             player_2 = PlayerModel().player_retrieval(match_list[i][1][0]).name
-            TournamentControllerView.MatchList(player_1, player_2)
+            TournamentControllerView.match_list(player_1, player_2)
 
         tournament.all_rounds_list.append(round_model.serialize())
         tournament.update()
 
-    def NextRound(self, tournament):
+    def next_round(self, tournament):
         now = datetime.datetime.now()
         date_formatted = now.strftime("%Y-%m-%d %H:%M:%S")
         all_rounds_list = tournament.all_rounds_list
@@ -103,9 +103,9 @@ class TournamentController:
 
         last_round_player_list = all_rounds_list[-1]['matchList']
 
-        sorted_players = TournamentControllerView.DisplayScoreList(last_round_player_list)
+        sorted_players = TournamentControllerView.display_score_list(last_round_player_list)
 
-        TournamentControllerView.RoundName(tournament)
+        TournamentControllerView.round_name(tournament)
 
         skip_next = False
         for i in range(0, len(sorted_players), 2):
@@ -125,24 +125,24 @@ class TournamentController:
                 print(p1, p2)
 
                 new_match_test = [p1, p2]
-                test_rematch = self.Rematches(new_match_test, tournament)
+                test_rematch = self.re_matches(new_match_test, tournament)
                 if test_rematch == new_match_test:
                     next_player_1 = PlayerModel().player_retrieval(sorted_players[i + 2][0])
                     next_player_1_score = sorted_players[i + 2][1]
                     next_player_2 = PlayerModel().player_retrieval(sorted_players[i + 3][0])
                     next_player_2_score = sorted_players[i + 3][1]
 
-                    new_match = MatchModel(player_1.id, player_1_score, next_player_1.id, next_player_1_score).Match()
-                    new_match_2 = MatchModel(player_2.id, player_2_score, next_player_2.id, next_player_2_score).Match()
+                    new_match = MatchModel(player_1.id, player_1_score, next_player_1.id, next_player_1_score).match()
+                    new_match_2 = MatchModel(player_2.id, player_2_score, next_player_2.id, next_player_2_score).match()
                     round_model.match_list.append(new_match)
                     round_model.match_list.append(new_match_2)
-                    TournamentControllerView.MatchList(player_1.name, next_player_1.name)
-                    TournamentControllerView.MatchList(player_2.name, next_player_2.name)
+                    TournamentControllerView.match_list(player_1.name, next_player_1.name)
+                    TournamentControllerView.match_list(player_2.name, next_player_2.name)
                     skip_next = True
                 else:
-                    new_match = MatchModel(player_1.id, player_1_score, player_2.id, player_2_score).Match()
+                    new_match = MatchModel(player_1.id, player_1_score, player_2.id, player_2_score).match()
                     round_model.match_list.append(new_match)
-                    TournamentControllerView.MatchList(player_1.name, player_2.name)
+                    TournamentControllerView.match_list(player_1.name, player_2.name)
         print(round_model.match_list)
         round_model.name = f'Round {tournament.current_round}'
         round_model.start_date = date_formatted
@@ -152,7 +152,7 @@ class TournamentController:
         tournament.update()
 
     @staticmethod
-    def CompleteRound(tournament):
+    def complete_round(tournament):
         now = datetime.datetime.now()
         date_formatted = now.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -169,7 +169,7 @@ class TournamentController:
             player_2 = PlayerModel().player_retrieval(match_list[i][1][0])
             player_2_score = match_list[i][1][1]
 
-            score = TournamentControllerView.Scoring(player_1, player_2)
+            score = TournamentControllerView.scoring(player_1, player_2)
 
             if int(score) == 1:
                 player_1_score += 1
@@ -179,7 +179,7 @@ class TournamentController:
                 player_1_score += 0.5
                 player_2_score += 0.5
 
-            new_match = MatchModel(player_1.id, player_1_score, player_2.id, player_2_score).Match()
+            new_match = MatchModel(player_1.id, player_1_score, player_2.id, player_2_score).match()
             new_round_model.match_list.append(new_match)
         new_round_model.name = f'Round {tournament.current_round}'
         new_round_model.start_date = last_round_model["startDate"]
@@ -193,30 +193,30 @@ class TournamentController:
         tournament.update()
 
     @staticmethod
-    def RetrieveTournamentNameDates(tournament):
-        TournamentControllerView().DisplayNameDates(tournament)
+    def retrieve_tournament_name_dates(tournament):
+        TournamentControllerView().display_name_dates(tournament)
 
     @staticmethod
-    def RetrieveTournamentPlayerList(tournament):
-        TournamentControllerView().DisplayPlayerList(tournament)
+    def retrieve_tournament_player_list(tournament):
+        TournamentControllerView().display_player_list(tournament)
 
     @staticmethod
-    def RetrieveTournamentRoundsMatchs(tournament):
+    def retrieve_tournament_rounds_matchs(tournament):
         for round in tournament.all_rounds_list:
             the_round = RoundModel().deserialize(round)
             match_list = the_round.match_list
-            TournamentControllerView().DisplayRounds(the_round)
+            TournamentControllerView().display_rounds(the_round)
             for match in match_list:
                 player_1 = PlayerModel().player_retrieval(match[0][0]).name
                 player_1_score = match[0][1]
                 player_2 = PlayerModel().player_retrieval(match[1][0]).name
                 player_2_score = match[1][1]
-                TournamentControllerView().DisplayMatches(player_1, player_1_score, player_2, player_2_score)
+                TournamentControllerView().display_matches(player_1, player_1_score, player_2, player_2_score)
 
     @staticmethod
-    def TournamentEnded(tournament):
+    def tournament_ended(tournament):
         if tournament.current_round > tournament.round_total:
-            TournamentControllerView.TournamentEnd()
+            TournamentControllerView.tournament_end()
 
             players_list = []
             if int(tournament.current_round) == int(tournament.round_total + 1):
@@ -227,9 +227,9 @@ class TournamentController:
                     players_list.append(player_1)
                     players_list.append(player_2)
 
-                sorted_players = TournamentControllerView.DisplayEndList(players_list)
+                sorted_players = TournamentControllerView.display_end_list(players_list)
                 for index, player in enumerate(sorted_players):
-                    TournamentControllerView.TournamentEndList(index, player)
+                    TournamentControllerView.tournament_end_list(index, player)
 
                 return True
 

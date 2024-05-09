@@ -1,6 +1,6 @@
 class MainControllerView:
     @staticmethod
-    def UserChoice():
+    def user_choice():
         while True:
             print('\n1. Add a player')
             print('2. Create a new Tournament ')
@@ -20,5 +20,5 @@ class MainControllerView:
                 print(f'{input_choice_value} is not one of the choices.\n -------------')
 
     @staticmethod
-    def ChooseTournament():
+    def choose_tournament():
         return int(input('\nSelect a tournament by is ID : '))

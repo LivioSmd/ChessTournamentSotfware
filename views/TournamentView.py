@@ -4,7 +4,7 @@ import re
 class TournamentView:
 
     @staticmethod
-    def SetTournamentName():
+    def set_tournament_name():
         while True:
             input_tournament_name = input('\nEnter the tournament Name: ').strip()
             if input_tournament_name.isdigit():
@@ -13,12 +13,12 @@ class TournamentView:
                 return input_tournament_name
 
     @staticmethod
-    def SetTournamentPlace():
+    def set_tournament_place():
         input_tournament_place = input('Enter the tournament Place: ')
         return input_tournament_place
 
     @staticmethod
-    def SetTournamentStartDate():
+    def set_tournament_start_date():
         while True:
             input_tournament_start_date = input('Enter the tournament Start Date (DD/MM/YYYY): ').strip()
             if not re.match(r'^\d{2}/\d{2}/\d{4}$', input_tournament_start_date):
@@ -27,7 +27,7 @@ class TournamentView:
                 return input_tournament_start_date
 
     @staticmethod
-    def SetTournamentEndDate():
+    def set_tournament_end_date():
         while True:
             input_tournament_end_date = input('Enter the tournament End Date (DD/MM/YYYY): ').strip()
             if not re.match(r'^\d{2}/\d{2}/\d{4}$', input_tournament_end_date):
@@ -36,7 +36,7 @@ class TournamentView:
                 return input_tournament_end_date
 
     @staticmethod
-    def SetTournamentRound():
+    def set_tournament_round():
         while True:
             input_tournament_ask_round = input('The number of Rounds is set to 4 by default, '
                                                'do you want to change it? (y/n)').strip()
@@ -52,12 +52,12 @@ class TournamentView:
                 print(f'"{input_tournament_ask_round}" is not one of the choices.')
 
     @staticmethod
-    def SetTournamentDescription():
+    def set_tournament_description():
         input_tournament_description = input('Enter the tournament Description: ')
         return input_tournament_description
 
     @staticmethod
-    def ChooseTournamentPlayers(players_in_db):
+    def choose_tournament_players(players_in_db):
         choice_list = []
 
         print("Here's a list of all the players in the database.")
@@ -92,6 +92,6 @@ class TournamentView:
         return choice_list
 
     @staticmethod
-    def DisplayDataBase(data):
+    def display_data_base(data):
         for tournament in data:
             print(f'{tournament}')

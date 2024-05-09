@@ -11,7 +11,7 @@ class MatchModel:
     def __repr__(self):
         return f"{self.player_a} {self.player_b} kkkkkkkk"
 
-    def Match(self):
+    def match(self):
         player_match = (
             [self.player_a, self.score_a],
             [self.player_b, self.score_b]
