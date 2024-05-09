@@ -20,10 +20,10 @@ class TournamentModel:
         self.player_list = player_list
 
     def __str__(self):
-        return f"[{self.id}] {self.name}. from: {self.start_date} to: {self.end_date}"
+        return f"{self.id}. {self.name}. from: {self.start_date} to: {self.end_date}"
 
     def __repr__(self):
-        return f"[{self.id}] {self.name}. from: {self.start_date} to: {self.end_date}"
+        return f"{self.id}. {self.name}. from: {self.start_date} to: {self.end_date}"
 
     def serialize(self):
         tournament_serialized = {

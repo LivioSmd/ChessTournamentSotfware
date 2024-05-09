@@ -2,14 +2,14 @@ class RoundModel:
     def __init__(self):
         self.name = 'Round'
         self.match_list = []
-        self.start_date = 'start_date'
-        self.end_date = 'end_date'
+        self.start_date = 'Undefined'
+        self.end_date = 'Undefined'
 
     def __str__(self):
-        return f"{self.name} {self.match_list}"  # TODO {self.start_date} {self.end_date}
+        return f"{self.name} from: {self.start_date} to: {self.end_date}"
 
     def __repr__(self):
-        return f"{self.name} {self.match_list}"  # TODO {self.start_date} {self.end_date}
+        return f"{self.name} from: {self.start_date} to: {self.end_date}"
 
     def serialize(self):
         round_serialized = {

@@ -74,7 +74,7 @@ class TournamentView:
         while True:
             for player in players_in_db:
                 print(f'{player}')
-            if len(choice_list) >= 2:  # TODO add 8
+            if len(choice_list) >= 8:
                 input_choose_players_extra = input('Another player (enter "N" to stop) ?: ').strip()
                 if input_choose_players_extra.lower() == 'n':
                     break
@@ -84,7 +84,7 @@ class TournamentView:
                             choice_list.append(player)
                             players_in_db.remove(player)
             else:
-                input_choose_players = int(input(f'Another player ({len(choice_list)}/2): ').strip())  # TODO add 8
+                input_choose_players = int(input(f'Another player ({len(choice_list)}/8): ').strip())
                 for player in players_in_db:
                     if player.id == input_choose_players:
                         choice_list.append(player)

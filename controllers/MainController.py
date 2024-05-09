@@ -8,7 +8,6 @@ from controllers.TournamentController import TournamentController
 
 
 class MainController:
-
     def MainMethod(self):
         while True:
             choice = MainControllerView.UserChoice()
@@ -21,6 +20,8 @@ class MainController:
             elif choice == 4:
                 self.DisplayPlayersInDataBase()
             elif choice == 5:
+                self.DisplayTournamentsInDataBase()
+            elif choice == 6:
                 Utils.CloseProgram()
                 break
 
@@ -30,15 +31,15 @@ class MainController:
         new_player = PlayerModel(player_info['name'], player_info['surname'], player_info['birthDate'])
         PlayerModel.insert_player_in_db(new_player)
 
-    @staticmethod
-    def DisplayPlayersInDataBase():
-        Utils.DbListPlayersMessage()
-        PlayerView.DisplayDataBase(PlayerModel.retrieve_all_players_from_db())
-
     def ChooseTournament(self):
         self.DisplayTournamentsInDataBase()
         tournament_id = MainControllerView.ChooseTournament()
         return TournamentModel().tournament_retrieval(tournament_id)
+
+    @staticmethod
+    def DisplayPlayersInDataBase():
+        Utils.DbListPlayersMessage()
+        PlayerView.DisplayDataBase(PlayerModel.retrieve_all_players_from_db())
 
     @staticmethod
     def DisplayTournamentsInDataBase():

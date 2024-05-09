@@ -5,9 +5,9 @@ class PlayerView:
 
     def RetrievePlayerInfo(self):
         return {
-            "name": self.getString("\nEnter player's Name:"),
-            "surname": self.getString("Enter player's Surname:"),
-            "birthDate": self.getDate("Enter player's Birth Date:"),
+            "name": self.getString("\nEnter player's Name: "),
+            "surname": self.getString("Enter player's Surname: "),
+            "birthDate": self.getDate("Enter player's Birth Date: "),
         }
 
     @staticmethod
@@ -30,8 +30,10 @@ class PlayerView:
 
     @staticmethod
     def DisplayDataBase(data):
-        for player in data:
-            print(f'{player}')
+        sorted_players = sorted(data, key=lambda p: p.name)
+        for player in sorted_players:
+            print(player)
+        return True
 
     @staticmethod
     def DisplayPlayer(player):
