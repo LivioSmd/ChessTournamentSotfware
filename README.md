@@ -1,4 +1,4 @@
-# Chess Tournament
+# logiciel de gestion de tournoi d'Échec
 
 ## Installation:
 1. clonez ce repository:
@@ -26,7 +26,11 @@ python MainController.py
 ```
 
 ## Utilisation du logiciel de gestion de tournoi.
-Le menu principal comporte 6 options :
+### Le logiciel comporte 2 Menu : 
+- un menu principal : gestion et création de joueurs et de tournois.
+- un menu secondaire : gestion, déroulement et rapport d'un touurnoi donné.
+
+### Le menu principal comporte 6 options :
 ### 1. Ajouter un joueur à la base de donnée
 - Renseigner le nom du joueur
 - Renseigner le prénom du joueur
@@ -46,4 +50,14 @@ Le menu principal comporte 6 options :
 ### 5. Récupérer la liste de tous les tournois en base de donnée
 - Renvoie la liste de tous les tournois présent en base de donnée
 ### 6. Quitter le programme
-- ferme le programme
+
+### Le Menu secondaire souvre lorsque de l'on crée ou que l'on choisi de lancer un tournoi déja crée.
+### Le menu secondaire comporte 6 options :
+
+### 1. Lancer ou continuer un round
+
+### 2. Stopper un round
+### 3. Récupérer les informations du tournoi
+### 4. Récupérer la liste des joueurs du tournoi
+### 5. Récupérer les informations concernant les rounds et les matchs du tournoi
+### 6. Retour au menu principal
