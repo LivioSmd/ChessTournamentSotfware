@@ -30,6 +30,7 @@ python MainController.py
 - un menu principal : gestion et création de joueurs et de tournois.
 - un menu secondaire : gestion, déroulement et rapport d'un touurnoi donné.
 
+---
 ### Le menu principal comporte 6 options :
 ### 1. Ajouter un joueur à la base de donnée
 - Renseigner le nom du joueur
@@ -51,8 +52,8 @@ python MainController.py
 - Renvoie la liste de tous les tournois présent en base de donnée
 ### 6. Quitter le programme
 
+---
 Le Menu secondaire souvre lorsque de l'on crée ou que l'on choisi de lancer un tournoi déja crée.
-
 ### Le menu secondaire comporte 6 options :
 #### 1. Lancer ou continuer un round
 #### 2. Stopper un round
