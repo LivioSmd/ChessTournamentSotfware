@@ -244,5 +244,5 @@ class TournamentController:
                 return True
 
     #   TODO Le rapport flake8-html ne présente aucune erreur.
-    #   TODO add Readme
+    #   TODO add Readme = ok
     #   TODO Le code est bien documenté (avec des commentaires et docstrings) = ok.
