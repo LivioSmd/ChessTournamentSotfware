@@ -8,6 +8,7 @@ import datetime
 
 class TournamentController:
     def main_method(self, tournament):
+        """secondary menu"""
         TournamentControllerView.round_info(tournament)
         while True:
             choice = TournamentControllerView.user_choice()
@@ -29,22 +30,8 @@ class TournamentController:
             elif choice == 6:
                 break
 
-    @staticmethod
-    def re_matches(test_rematch, tournament):
-        all_rounds = tournament.all_rounds_list
-        for round in all_rounds:
-            match_list = round['matchList']
-            print(f'round matchList: {round['matchList']}')
-            for match in match_list:
-                p1 = match[0][0]
-                p2 = match[1][0]
-                every_match = [p1, p2]
-                print(f'every_match : {every_match}')
-                if every_match == test_rematch:
-                    print('HELP')
-                    return test_rematch
-
     def launch_round(self, tournament):
+        """manages the launch of rounds"""
         while True:
             if self.tournament_ended(tournament):
                 break
@@ -67,6 +54,7 @@ class TournamentController:
 
     @staticmethod
     def first_round(tournament):
+        """executes the logic of the first part of the first round"""
         player_list = tournament.player_list
         round_model = RoundModel()
         now = datetime.datetime.now()
@@ -96,6 +84,7 @@ class TournamentController:
         tournament.update()
 
     def next_round(self, tournament):
+        """executes the logic of the first part of the other rounds"""
         now = datetime.datetime.now()
         date_formatted = now.strftime("%Y-%m-%d %H:%M:%S")
         all_rounds_list = tournament.all_rounds_list
@@ -153,6 +142,7 @@ class TournamentController:
 
     @staticmethod
     def complete_round(tournament):
+        """executes the logic of the second part of the rounds"""
         now = datetime.datetime.now()
         date_formatted = now.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -193,15 +183,34 @@ class TournamentController:
         tournament.update()
 
     @staticmethod
+    def re_matches(test_rematch, tournament):
+        """verification method to avoid re-matches"""
+        all_rounds = tournament.all_rounds_list
+        for round in all_rounds:
+            match_list = round['matchList']
+            print(f'round matchList: {round['matchList']}')
+            for match in match_list:
+                p1 = match[0][0]
+                p2 = match[1][0]
+                every_match = [p1, p2]
+                print(f'every_match : {every_match}')
+                if every_match == test_rematch:
+                    print('HELP')
+                    return test_rematch
+
+    @staticmethod
     def retrieve_tournament_name_dates(tournament):
+        """retrieve the name and dates of a tournament"""
         TournamentControllerView().display_name_dates(tournament)
 
     @staticmethod
     def retrieve_tournament_player_list(tournament):
+        """retrieve the list of players in a tournament"""
         TournamentControllerView().display_player_list(tournament)
 
     @staticmethod
     def retrieve_tournament_rounds_matchs(tournament):
+        """retrieve the list of rounds and matches from a tournament"""
         for round in tournament.all_rounds_list:
             the_round = RoundModel().deserialize(round)
             match_list = the_round.match_list
@@ -215,6 +224,7 @@ class TournamentController:
 
     @staticmethod
     def tournament_ended(tournament):
+        """displays information about the completed tournament"""
         if tournament.current_round > tournament.round_total:
             TournamentControllerView.tournament_end()
 
@@ -233,6 +243,6 @@ class TournamentController:
 
                 return True
 
-    #   TODO découper les infos du rapport du tournoi = ok
-    #   TODO relire le cahier des charges et verif = ok
-    #   TODO lire la grille d'éval (discord)
+    #   TODO Le rapport flake8-html ne présente aucune erreur.
+    #   TODO add Readme
+    #   TODO Le code est bien documenté (avec des commentaires et docstrings) = ok.

@@ -12,6 +12,7 @@ class RoundModel:
         return f"{self.name} from: {self.start_date} to: {self.end_date}"
 
     def serialize(self):
+        """round serialization"""
         round_serialized = {
             "name": self.name,
             "matchList": self.match_list,
@@ -22,6 +23,7 @@ class RoundModel:
         return round_serialized
 
     def deserialize(self, round):
+        """round deserialization"""
         self.name = round.get('name')
         self.match_list = round.get('matchList')
         self.start_date = round.get('startDate')

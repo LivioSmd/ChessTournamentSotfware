@@ -26,6 +26,7 @@ class TournamentModel:
         return f"{self.id}. {self.name}. from: {self.start_date} to: {self.end_date}"
 
     def serialize(self):
+        """tournament serialization"""
         tournament_serialized = {
             "id": self.id,
             "name": self.name,
@@ -38,16 +39,10 @@ class TournamentModel:
             "description": self.description,
             "playerList": [p.id for p in self.player_list],
         }
-
-        """"
-        players = []
-        for p in self.player_list:
-            players.append(p.id)
-        """""
-
         return tournament_serialized
 
     def deserialize(self, tournament):
+        """tournament deserialization"""
         self.id = tournament.get('id')
         self.name = tournament.get('name')
         self.place = tournament.get('place')
@@ -60,7 +55,7 @@ class TournamentModel:
         self.player_list = [PlayerModel().player_retrieval(p) for p in tournament.get('playerList')]
 
         """"
-        players = []
+        player_list = []
         for p in tournament.get('playerList'):
             players.append(PlayerModel().player_retrieval(p))
         """""
@@ -68,18 +63,22 @@ class TournamentModel:
         return self
 
     def insert_tournament_in_db(self):
+        """inserting tournament into the database"""
         self.id = tournaments_table.insert(self.serialize())
         self.update()
 
     def update(self):
+        """update tournament information"""
         tournaments_table.update(self.serialize(), doc_ids=[self.id])
 
     def tournament_retrieval(self, id):
+        """retrieve a player from the database"""
         tournament = db.table('tournaments').get(doc_id=id)
         return self.deserialize(tournament)
 
     @staticmethod
     def retrieve_all_tournaments_from_db():
+        """retrieve all players from the database"""
         tournaments_list = []
         for tournament in tournaments_table.all():
             tournaments_list.append(TournamentModel().deserialize(tournament))

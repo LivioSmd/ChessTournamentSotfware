@@ -9,6 +9,7 @@ from controllers.TournamentController import TournamentController
 
 class MainController:
     def main_method(self):
+        """main menu"""
         while True:
             choice = MainControllerView.user_choice()
             if choice == 1:
@@ -27,27 +28,32 @@ class MainController:
 
     @staticmethod
     def register_player():
+        """create and register a player in the database"""
         player_info = PlayerView().retrieve_player_info()
         new_player = PlayerModel(player_info['name'], player_info['surname'], player_info['birthDate'])
         PlayerModel.insert_player_in_db(new_player)
 
     def choose_tournament(self):
+        """return the id of a selected tournament"""
         self.display_tournaments_in_data_base()
         tournament_id = MainControllerView.choose_tournament()
         return TournamentModel().tournament_retrieval(tournament_id)
 
     @staticmethod
     def display_players_in_data_base():
+        """display player list"""
         Utils.db_list_players_message()
         PlayerView.display_data_base(PlayerModel.retrieve_all_players_from_db())
 
     @staticmethod
     def display_tournaments_in_data_base():
+        """display tournament list"""
         Utils.db_list_tournaments_message()
         TournamentView.display_data_base(TournamentModel.retrieve_all_tournaments_from_db())
 
     @staticmethod
     def set_tournament():
+        """create and register a tournament in the database"""
         tournament = TournamentModel(
             TournamentView.set_tournament_name(),
             TournamentView.set_tournament_place(),

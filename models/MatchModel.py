@@ -6,12 +6,13 @@ class MatchModel:
         self.score_b = score_b
 
     def __str__(self):
-        return f"{self.player_a} {self.player_b} kkkkkkk"
+        return f"{self.player_a} {self.player_b}"
 
     def __repr__(self):
-        return f"{self.player_a} {self.player_b} kkkkkkkk"
+        return f"{self.player_a} {self.player_b}"
 
     def match(self):
+        """round formatting"""
         player_match = (
             [self.player_a, self.score_a],
             [self.player_b, self.score_b]
