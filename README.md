@@ -51,13 +51,12 @@ python MainController.py
 - Renvoie la liste de tous les tournois présent en base de donnée
 ### 6. Quitter le programme
 
-### Le Menu secondaire souvre lorsque de l'on crée ou que l'on choisi de lancer un tournoi déja crée.
+Le Menu secondaire souvre lorsque de l'on crée ou que l'on choisi de lancer un tournoi déja crée.
+
 ### Le menu secondaire comporte 6 options :
-
-### 1. Lancer ou continuer un round
-
-### 2. Stopper un round
-### 3. Récupérer les informations du tournoi
-### 4. Récupérer la liste des joueurs du tournoi
-### 5. Récupérer les informations concernant les rounds et les matchs du tournoi
-### 6. Retour au menu principal
+- 1. Lancer ou continuer un round
+- 2. Stopper un round
+- 3. Récupérer les informations du tournoi
+- 4. Récupérer la liste des joueurs du tournoi
+- 5. Récupérer les informations concernant les rounds et les matchs du tournoi
+- 6. Retour au menu principal
