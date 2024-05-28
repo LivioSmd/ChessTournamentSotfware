@@ -28,7 +28,7 @@ python MainController.py
 ## Utilisation du logiciel de gestion de tournoi.
 ### Le logiciel comporte 2 Menu : 
 - un menu principal : gestion et création de joueurs et de tournois.
-- un menu secondaire : gestion, déroulement et rapport d'un touurnoi donné.
+- un menu secondaire : gestion, déroulement et génération de rapports d'un tournoi donné.
 
 ---
 ### Le menu principal comporte 6 options :
@@ -41,20 +41,19 @@ python MainController.py
 - Renseigner l'endroit du tournoi
 - Renseigner la date de début du tournoi
 - Renseigner la date de fin du tournoi
-- Renseigner le nombre de round(s)
+- Renseigner le nombre de round
 - Renseigner la description du tournoi
-- Choisir les joueurs pour votre tournoi parmis tous ceux présent en base de donnée (8 minimums)
+- Choisir les joueurs pour votre tournoi parmi tous ceux présent en base de donnée (8 minimums)
 ### 3. Lancer un tournoi
-- Sélectionner un tournoi parmis tous ceux présent en base de donnée
+- Sélectionner un tournoi parmi tous ceux présent en base de donnée
 ### 4. Récupérer la liste de tous les joueurs en base de donnée
-- Renvoie la liste de tous les joueurs présent en base de donnée
 ### 5. Récupérer la liste de tous les tournois en base de donnée
-- Renvoie la liste de tous les tournois présent en base de donnée
 ### 6. Quitter le programme
 
 ---
-Le Menu secondaire souvre lorsque de l'on crée ou que l'on choisi de lancer un tournoi déja crée.
 ### Le menu secondaire comporte 6 options :
+(Le menu secondaire s'ouvre lorsque de l'on crée ou que l'on choisit de lancer un tournoi déjà crée.)
+
 #### 1. Lancer ou continuer un round
 #### 2. Stopper un round
 #### 3. Récupérer les informations du tournoi
