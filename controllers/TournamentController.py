@@ -122,7 +122,8 @@ class TournamentController:
                     next_player_2_score = sorted_players[i + 3][1]
 
                     new_match = MatchModel(player_1.id, player_1_score, next_player_1.id, next_player_1_score).match()
-                    new_match_2 = MatchModel(player_2.id, player_2_score, next_player_2.id, next_player_2_score).match()
+                    new_match_2 = MatchModel(player_2.id, player_2_score,
+                                             next_player_2.id, next_player_2_score).match()
                     round_model.match_list.append(new_match)
                     round_model.match_list.append(new_match_2)
                     TournamentControllerView.match_list(player_1.name, next_player_1.name)
@@ -244,5 +245,4 @@ class TournamentController:
                 return True
 
     #   TODO Le rapport flake8-html ne présente aucune erreur.
-    #   TODO add Readme = ok
-    #   TODO Le code est bien documenté (avec des commentaires et docstrings) = ok.
+    #   TODO readme expliquer a quoi sert le programme + info pour générer un rapport

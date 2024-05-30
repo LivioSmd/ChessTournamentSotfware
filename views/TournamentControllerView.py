@@ -40,7 +40,8 @@ class TournamentControllerView:
     @staticmethod
     def round_info(tournament):
         print(
-            f'\nFor this Tournament current Round is Actually [{tournament.current_round - 1}/{tournament.round_total}]')
+            f'\nFor this Tournament current Round is Actually '
+            f'[{tournament.current_round - 1}/{tournament.round_total}]')
 
     @staticmethod
     def round_over():
@@ -75,7 +76,7 @@ class TournamentControllerView:
         print(f'- Tournament End Date: {tournament.end_date}')
 
     def display_player_list(self, tournament):
-        print(f'- Tournament Players List:')
+        print('- Tournament Players List:')
         self.display_tournament_players(tournament.player_list)
 
     @staticmethod
