@@ -1,5 +1,8 @@
 # logiciel de gestion de tournoi d'Échec
 
+## Description
+Ce logiciel de gestion de tournois d'échecs a été conçu pour simplifier l'organisation et le déroulement des compétitions. Il permet de suivre chaque tournoi de manière claire, efficace et hors ligne, offrant des fonctionnalités pour enregistrer les participants, gérer les appariements, suivre les résultats, et générer des rapports.
+
 ## Installation:
 1. clonez ce repository:
 ```
@@ -24,6 +27,12 @@ pip install -r requirements.txt
 ```
 python MainController.py
 ```
+---
+6. Générer un rapport Flake8
+```
+flake8 --format=html --htmldir=flake-report
+```
+
 
 ## Utilisation du logiciel de gestion de tournoi.
 ### Le logiciel comporte 2 Menu : 
