@@ -3,6 +3,7 @@
 ## Description
 Ce logiciel de gestion de tournois d'échecs a été conçu pour simplifier l'organisation et le déroulement des compétitions. Il permet de suivre chaque tournoi de manière claire, efficace et hors ligne, offrant des fonctionnalités pour enregistrer les participants, gérer les appariements, suivre les résultats, et générer des rapports.
 
+
 ## Installation:
 1. clonez ce repository:
 ```
@@ -58,6 +59,7 @@ flake8 --format=html --htmldir=flake-report
 ### 4. Récupérer la liste de tous les joueurs en base de donnée
 ### 5. Récupérer la liste de tous les tournois en base de donnée
 ### 6. Quitter le programme
+
 
 ---
 ### Le menu secondaire comporte 6 options :
