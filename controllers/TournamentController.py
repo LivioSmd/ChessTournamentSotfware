@@ -84,7 +84,7 @@ class TournamentController:
         tournament.update()
 
     def next_round(self, tournament):
-        """executes the logic of the first part of the other rounds"""
+        """Executes the logic of the first part of the other rounds"""
         now = datetime.datetime.now()
         date_formatted = now.strftime("%Y-%m-%d %H:%M:%S")
         all_rounds_list = tournament.all_rounds_list
@@ -112,23 +112,30 @@ class TournamentController:
                 new_match_test = [p1, p2]
                 test_rematch = self.re_matches(new_match_test, tournament)
                 if test_rematch == new_match_test:
-                    next_player_1 = PlayerModel().player_retrieval(sorted_players[i + 2][0])
-                    next_player_1_score = sorted_players[i + 2][1]
-                    next_player_2 = PlayerModel().player_retrieval(sorted_players[i + 3][0])
-                    next_player_2_score = sorted_players[i + 3][1]
+                    try:
+                        next_player_1 = PlayerModel().player_retrieval(sorted_players[i + 2][0])
+                        next_player_1_score = sorted_players[i + 2][1]
+                        next_player_2 = PlayerModel().player_retrieval(sorted_players[i + 3][0])
+                        next_player_2_score = sorted_players[i + 3][1]
 
-                    new_match = MatchModel(player_1.id, player_1_score, next_player_1.id, next_player_1_score).match()
-                    new_match_2 = MatchModel(player_2.id, player_2_score,
-                                             next_player_2.id, next_player_2_score).match()
-                    round_model.match_list.append(new_match)
-                    round_model.match_list.append(new_match_2)
-                    TournamentControllerView.match_list(player_1.name, next_player_1.name)
-                    TournamentControllerView.match_list(player_2.name, next_player_2.name)
-                    skip_next = True
+                        new_match = MatchModel(player_1.id, player_1_score, next_player_1.id,
+                                               next_player_1_score).match()
+                        new_match_2 = MatchModel(player_2.id, player_2_score,
+                                                 next_player_2.id, next_player_2_score).match()
+                        round_model.match_list.append(new_match)
+                        round_model.match_list.append(new_match_2)
+                        TournamentControllerView.match_list(player_1.name, next_player_1.name)
+                        TournamentControllerView.match_list(player_2.name, next_player_2.name)
+                        skip_next = True
+                    except IndexError:
+                        new_match = MatchModel(player_1.id, player_1_score, player_2.id, player_2_score).match()
+                        round_model.match_list.append(new_match)
+                        TournamentControllerView.match_list(player_1.name, player_2.name)
                 else:
                     new_match = MatchModel(player_1.id, player_1_score, player_2.id, player_2_score).match()
                     round_model.match_list.append(new_match)
                     TournamentControllerView.match_list(player_1.name, player_2.name)
+
         round_model.name = f'Round {tournament.current_round}'
         round_model.start_date = date_formatted
         tournament.all_rounds_list.append(round_model.serialize())
