@@ -1,5 +1,4 @@
 class TournamentControllerView:
-
     @staticmethod
     def user_choice():
         while True:

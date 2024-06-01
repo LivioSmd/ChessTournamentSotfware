@@ -2,7 +2,6 @@ import re
 
 
 class PlayerView:
-
     def retrieve_player_info(self):
         return {
             "name": self.get_string("\nEnter player's Name: "),

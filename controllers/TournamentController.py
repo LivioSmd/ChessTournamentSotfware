@@ -135,7 +135,6 @@ class TournamentController:
                     new_match = MatchModel(player_1.id, player_1_score, player_2.id, player_2_score).match()
                     round_model.match_list.append(new_match)
                     TournamentControllerView.match_list(player_1.name, player_2.name)
-
         round_model.name = f'Round {tournament.current_round}'
         round_model.start_date = date_formatted
         tournament.all_rounds_list.append(round_model.serialize())

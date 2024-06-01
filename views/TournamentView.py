@@ -2,7 +2,6 @@ import re
 
 
 class TournamentView:
-
     @staticmethod
     def set_tournament_name():
         while True:

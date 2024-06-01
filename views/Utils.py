@@ -1,5 +1,4 @@
 class Utils:
-
     @staticmethod
     def close_program():
         return print('---- Program out ----')
