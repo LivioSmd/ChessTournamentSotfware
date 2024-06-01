@@ -14,13 +14,13 @@ class TournamentController:
             choice = TournamentControllerView.user_choice()
             if choice == 1:
                 if not tournament.all_rounds_list:
-                    self.launch_round(tournament)
+                    self.gestion_round(tournament)
                 elif "Undefined" in tournament.all_rounds_list[-1]["endDate"]:
                     TournamentControllerView.impossible_launch_round()
                 else:
-                    self.launch_round(tournament)
+                    self.gestion_round(tournament)
             elif choice == 2:
-                self.launch_round(tournament)
+                self.gestion_round(tournament)
             elif choice == 3:
                 self.retrieve_tournament_name_dates(tournament)
             elif choice == 4:
@@ -30,7 +30,7 @@ class TournamentController:
             elif choice == 6:
                 break
 
-    def launch_round(self, tournament):
+    def gestion_round(self, tournament):
         """manages the launch of rounds"""
         while True:
             if self.tournament_ended(tournament):
@@ -46,7 +46,7 @@ class TournamentController:
             else:
                 if "Undefined" in tournament.all_rounds_list[-1]["endDate"]:
                     self.complete_round(tournament)
-                    self.tournament_ended(tournament)
+                    self.tournament_ended(tournament)  # check if the tournament is finished
                     break
                 else:
                     self.next_round(tournament)
@@ -91,9 +91,7 @@ class TournamentController:
         round_model = RoundModel()
 
         last_round_player_list = all_rounds_list[-1]['matchList']
-
         sorted_players = TournamentControllerView.display_score_list(last_round_player_list)
-
         TournamentControllerView.round_name(tournament)
 
         skip_next = False
@@ -103,7 +101,6 @@ class TournamentController:
                 continue
 
             if i < len(sorted_players) - 1:
-                print(f'sorted_players: {sorted_players}')
                 p1 = sorted_players[i][0]
                 p2 = sorted_players[i + 1][0]
 
@@ -111,7 +108,6 @@ class TournamentController:
                 player_1_score = sorted_players[i][1]
                 player_2 = PlayerModel().player_retrieval(p2)
                 player_2_score = sorted_players[i + 1][1]
-                print(p1, p2)
 
                 new_match_test = [p1, p2]
                 test_rematch = self.re_matches(new_match_test, tournament)
@@ -133,12 +129,9 @@ class TournamentController:
                     new_match = MatchModel(player_1.id, player_1_score, player_2.id, player_2_score).match()
                     round_model.match_list.append(new_match)
                     TournamentControllerView.match_list(player_1.name, player_2.name)
-        print(round_model.match_list)
         round_model.name = f'Round {tournament.current_round}'
         round_model.start_date = date_formatted
-
         tournament.all_rounds_list.append(round_model.serialize())
-        print(tournament.all_rounds_list)
         tournament.update()
 
     @staticmethod
@@ -150,9 +143,6 @@ class TournamentController:
         last_round_model = tournament.all_rounds_list[-1]
         match_list = last_round_model['matchList']
         new_round_model = RoundModel()
-
-        print(last_round_model)
-        print(match_list)
 
         for i in range(len(match_list)):
             player_1 = PlayerModel().player_retrieval(match_list[i][0][0])
@@ -176,9 +166,6 @@ class TournamentController:
         new_round_model.start_date = last_round_model["startDate"]
         new_round_model.end_date = date_formatted
 
-        print(new_round_model)
-        print(new_round_model.match_list)
-
         tournament.all_rounds_list[-1] = new_round_model.serialize()
         tournament.current_round += 1
         tournament.update()
@@ -189,14 +176,11 @@ class TournamentController:
         all_rounds = tournament.all_rounds_list
         for round in all_rounds:
             match_list = round['matchList']
-            print(f'round matchList: {round['matchList']}')
             for match in match_list:
                 p1 = match[0][0]
                 p2 = match[1][0]
                 every_match = [p1, p2]
-                print(f'every_match : {every_match}')
                 if every_match == test_rematch:
-                    print('HELP')
                     return test_rematch
 
     @staticmethod
@@ -243,6 +227,3 @@ class TournamentController:
                     TournamentControllerView.tournament_end_list(index, player)
 
                 return True
-
-    #   TODO Le rapport flake8-html ne présente aucune erreur.
-    #   TODO readme expliquer a quoi sert le programme + info pour générer un rapport
